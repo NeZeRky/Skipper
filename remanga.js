@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const AUTH_TOKEN = 'Bearer YOUR_BEARER_TOKEN';
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
 const URL_PVP = 'https://api.remanga.org/api/v2/events/card-battle/pvp/match/';
 
@@ -36,7 +36,7 @@ async function mainLoop() {
                 }
                 lastPvpTime = Date.now();
             } catch (error) {
-                handleError(error, 'PvP');
+                await handleError(error, 'PvP');
                 if (error.response && error.response.status === 401) process.exit(1);
                 if (error.response) lastPvpTime = Date.now();
             }
@@ -50,7 +50,7 @@ function handleError(error, mode) {
     if (error.response) {
         console.error(`[-] [${mode}] Ошибка сервера (Код ${error.response.status})`);
     } else if (error.request) {
-        console.error(`🌐 [${mode}] Ошибка сети на телефоне. Повтор через 15 секунд...`);
+        console.error(`🌐 [${mode}] Ошибка сети. Повтор через 15 секунд...`);
         return sleep(NETWORK_ERROR_DELAY);
     }
 }
