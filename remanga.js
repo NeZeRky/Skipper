@@ -65,7 +65,7 @@ async function mainLoop() {
                     }).format(Date.now());
                     console.log(`[Рейд Успех] Бой выигран! Очки начислены.` + "[" + timeString + "]");
                 }
-                await sleep(5000 + Math.random() * 3000); // Пауза между рейдами
+                await sleep(5000 + Math.random() * 3000); // Pause between flights
                 continue; 
             } catch (error) {
                 handleError(error, 'Рейд');
